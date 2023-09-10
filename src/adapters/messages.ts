@@ -1,8 +1,11 @@
 import { Request } from 'express';
 import { validateEntry } from '../lib/messages';
-import { TAdapterReply, TAdapterText } from '../types';
+import { TAdapterReply, TAdapterText, TMessage } from '../types';
 
-export const adaptWhatsappMesage = (req: Request) => {
+
+
+
+export const adaptWhatsappMesage = (req: Request): TMessage | null => {
   try {
     const isValidMessage = validateEntry(req);
     if (!isValidMessage) return null;
@@ -19,7 +22,7 @@ export const adaptWhatsappMesage = (req: Request) => {
 
     return {
       type,
-      from,
+      senderId: from,
       data: handlingFn ? handlingFn(rest) : null
     };
 

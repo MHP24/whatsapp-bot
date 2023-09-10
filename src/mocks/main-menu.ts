@@ -1,6 +1,6 @@
 import { TMenu } from '../types';
 
-export const menu: Record<number, TMenu> = {
+export const MAIN_MENU: Record<number, TMenu> = {
   1: {
     title: 'Servicios',
     answer: [
