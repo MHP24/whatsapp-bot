@@ -6,6 +6,6 @@ export const appConfig = {
   whatsappToken: process.env.WHATSAPP_TOKEN,
   whatsappVersion: process.env.WHATSAPP_VERSION,
   whatsappAccountId: process.env.WHATSAPP_ACCOUNT_ID,
-  port: process.env.APP_PORT
-
+  port: process.env.APP_PORT,
+  defaultFlow: process.env.DEFAULT_FLOW
 };

@@ -3,8 +3,6 @@ import { validateEntry } from '../lib/messages';
 import { TAdapterReply, TAdapterText, TMessage } from '../types';
 
 
-
-
 export const adaptWhatsappMesage = (req: Request): TMessage | null => {
   try {
     const isValidMessage = validateEntry(req);
