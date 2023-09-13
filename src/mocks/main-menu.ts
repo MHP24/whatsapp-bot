@@ -2,7 +2,7 @@ import { TMenu } from '../types';
 
 export const MAIN_MENU: Record<number, TMenu> = {
   1: {
-    title: 'Servicios',
+    title: '🚀  Servicios',
     answer: [
       {
         type: 'text',
@@ -29,7 +29,7 @@ export const MAIN_MENU: Record<number, TMenu> = {
     options: [2, 3, 4, 5, 6],
   },
   2: {
-    title: 'Sobre mi',
+    title: '👤  Sobre mi',
     answer: [
       {
         type: 'text',
@@ -41,7 +41,7 @@ export const MAIN_MENU: Record<number, TMenu> = {
     options: [1, 3, 4, 5, 6],
   },
   3: {
-    title: 'Experiencia',
+    title: '📚  Experiencia',
     answer: [
       {
         type: 'text',
@@ -62,13 +62,18 @@ export const MAIN_MENU: Record<number, TMenu> = {
   },
   4: {
     title: 'Proyectos',
-    answer: [],
+    answer: [
+      {
+        type: 'text',
+        content: 'Te invito a explorar algunos de mis proyectos'
+      }
+    ],
     options: [1, 2, 3, 5, 6]
   },
   5: {
     title: 'Contacto',
     answer: [],
-    options: [1, 2, 3, 4, 6],
+    options: [],
     redirect: {
       origin: 'contact',
       destination: 'contact'

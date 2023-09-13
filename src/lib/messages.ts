@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { http } from '../adapters';
 import { appConfig } from '../config';
-import { MAIN_MENU } from '../mocks';
+import { MAIN_MENU, sysMessages } from '../mocks';
 
 const BASE_URL = `https://graph.facebook.com/${appConfig.whatsappVersion}/` +
   `${appConfig.whatsappAccountId}/messages?access_token=${appConfig.whatsappToken}`;
@@ -37,6 +37,8 @@ export const sendMenu = async (senderId: string, options: (string | number)[]) =
   if (!options.length) return;
 
   try {
+    const isNewMenu = options.length === Object.keys(MAIN_MENU).length;
+
     await http.post(BASE_URL, {
       messaging_product: 'whatsapp',
       recipient_type: 'individual',
@@ -46,10 +48,13 @@ export const sendMenu = async (senderId: string, options: (string | number)[]) =
         type: 'list',
         header: {
           type: 'text',
-          text: 'Hola! Soy el asistente virtual de Miguel'
+          text:
+            isNewMenu ? sysMessages.welcomeHeader
+              : sysMessages.continueHeader
         },
         body: {
-          text: '¿En qué de puedo ayudar?'
+          text: isNewMenu ? sysMessages.welcomeBody
+            : sysMessages.continueBody
         },
         footer: {
           text: 'Opciones...'
