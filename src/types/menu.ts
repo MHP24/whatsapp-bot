@@ -1,9 +1,9 @@
-type TextAnswer = {
+export type TextAnswer = {
   type: 'text',
   content: string,
 }
 
-type TImage = {
+export type ImageAnswer = {
   type: 'image',
   content: {
     url: string,
@@ -13,7 +13,7 @@ type TImage = {
 
 export type TMenu = {
   title: string,
-  answer: (TextAnswer | TImage)[],
+  answer: (TextAnswer | ImageAnswer)[],
   options: number[]
   redirect?: {
     origin: string,

@@ -1,12 +1,18 @@
 import { senders } from '../controllers';
-import { sendMenu, sendTextMessage } from '../lib/messages';
+import { sendMenu, sendMessages } from '../lib/messages';
 import { MAIN_MENU } from '../mocks';
 import { TFlowInput, TFlowResponse } from '../types';
 
+const defaultReturn = {
+  hasToTransfer: false,
+  destination: null,
+  origin: null,
+};
 
 export const handleInfoFlow = async (
   { senderId, sender, data }: TFlowInput
 ): Promise<TFlowResponse> => {
+
   if (!sender) {
     senders.add(senderId, {
       currentFlow: 'info',
@@ -14,29 +20,29 @@ export const handleInfoFlow = async (
     });
 
     await sendMenu(senderId, Object.keys(MAIN_MENU));
+
+    return defaultReturn;
   }
 
-  const option = MAIN_MENU[+data];
-  console.log({ option });
+  const menuOption = MAIN_MENU[+data];
 
+  if (menuOption) {
+    const { options, answer, redirect } = menuOption;
+    await sendMessages(senderId, answer);
 
-  //TODO: Fix text whitespaces
-  if (option) {
-    for (const message of option.answer) {
-      message.type === 'text' && (
-        await sendTextMessage(senderId, message.content)
-      );
-    }
-
-    !option.redirect && (
-      await sendMenu(senderId, option.options)
+    !redirect && (
+      await sendMenu(senderId, options)
     );
 
+    return !redirect ? defaultReturn
+      : ({
+        hasToTransfer: true,
+        destination: redirect.destination,
+        origin: redirect.origin
+      });
   }
 
-  return {
-    hasToTransfer: false,
-    destination: null,
-    origin: null,
-  };
+  await sendMenu(senderId, []);
+
+  return defaultReturn;
 };

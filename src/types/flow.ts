@@ -1,6 +1,5 @@
 import { TSender } from './sender';
 
-type TFlows = 'info' | 'contact'
 
 export type TFlowInput = {
   senderId: string,
@@ -11,5 +10,5 @@ export type TFlowInput = {
 export type TFlowResponse = {
   hasToTransfer: boolean,
   destination: string | null,
-  origin: TFlows | null
+  origin: string | null
 }
