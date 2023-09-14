@@ -103,3 +103,37 @@ export const sendMenu = async (senderId: string, options: (string | number)[]) =
     console.error(error);
   }
 };
+
+
+
+export const sendOptions = async (
+  senderId: string, options: string[], title: string
+) => {
+  try {
+    await http.post(BASE_URL, {
+      messaging_product: 'whatsapp',
+      recipient_type: 'individual',
+      to: senderId,
+      type: 'interactive',
+      interactive: {
+        type: 'button',
+        body: {
+          text: title
+        },
+        action: {
+          buttons: options.map(option => (
+            {
+              type: 'reply',
+              reply: {
+                id: option,
+                title: option
+              }
+            }
+          ))
+        }
+      }
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};

@@ -1,5 +1,5 @@
 import { senders } from '../controllers';
-import { sendTextMessage } from '../lib/messages';
+import { sendOptions, sendTextMessage } from '../lib/messages';
 import { sysMessages } from '../mocks';
 import { TFlowInput, TFlowResponse } from '../types';
 
@@ -21,22 +21,30 @@ export const handleExitFlow = async (
       currentFlow: 'exit'
     });
 
-    await sendTextMessage(senderId, '¿Te gustaría ponerte en contacto con Miguel?');
-    // no delete and save phoneNumber + date
+    await sendOptions(
+      senderId,
+      ['Si', 'No'],
+      '¿Te gustaría ponerte en contacto con Miguel?'
+    );
     return defaultReturn;
-
-
-    //yes transfer
-
   }
 
-  const regex = /^(si|no)/gi;
-  if (!data.match(regex)) {
+  const isValidAnswer = data.toLowerCase().match(/^(si|no)$/g);
+
+  if (!isValidAnswer) {
     await sendTextMessage(senderId, sysMessages.invalidYesNo);
     return defaultReturn;
   }
 
+  if (isValidAnswer[0] === 'si') {
+    return {
+      hasToTransfer: true,
+      destination: 'contact',
+      origin: 'exit'
+    };
+  }
 
+  //TODO: Remove user, bye msg and notify user interacted
 
   return defaultReturn;
 };
