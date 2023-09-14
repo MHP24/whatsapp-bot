@@ -71,7 +71,7 @@ export const MAIN_MENU: Record<number, TMenu> = {
     options: [1, 2, 3, 5, 6]
   },
   5: {
-    title: 'Contacto',
+    title: '📲  Contacto',
     answer: [],
     options: [],
     redirect: {
@@ -80,12 +80,12 @@ export const MAIN_MENU: Record<number, TMenu> = {
     }
   },
   6: {
-    title: 'Salir',
+    title: '🔳  Salir',
     answer: [],
     options: [],
     redirect: {
       origin: 'exit',
-      destination: 'contact'
+      destination: 'exit'
     }
   }
 };

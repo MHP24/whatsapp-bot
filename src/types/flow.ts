@@ -12,3 +12,8 @@ export type TFlowResponse = {
   destination: string | null,
   origin: string | null
 }
+
+export type TContactFlowData = {
+  current: number,
+  answers: string[]
+};

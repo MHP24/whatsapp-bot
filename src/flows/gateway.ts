@@ -3,7 +3,7 @@ import { adaptWhatsappMesage } from '../adapters';
 import { sysMessages } from '../mocks';
 import { sendTextMessage } from '../lib/messages';
 import { senders } from '../controllers';
-import { handleInfoFlow } from '.';
+import { handleContactFlow, handleExitFlow, handleInfoFlow } from '.';
 import { appConfig } from '../config';
 import { TFlowInput, TFlowResponse } from '../types';
 
@@ -23,9 +23,12 @@ export const handleGateway = async (req: Request, res: Response) => {
       });
     }
 
+    console.log({ data });
+
     const flows: Record<string, (data: TFlowInput) => Promise<TFlowResponse>> = {
       'info': handleInfoFlow,
-      // 'contact': 
+      'contact': handleContactFlow,
+      'exit': handleExitFlow
     };
 
     const sender = senders.get(senderId);
@@ -39,10 +42,14 @@ export const handleGateway = async (req: Request, res: Response) => {
     );
 
     if (hasToTransfer) {
-      console.log({ destination, origin });
-    }
+      console.log('[Transfer]', { senderId, destination, origin });
 
-    // console.log({ data });
+      flows[destination!]({
+        senderId,
+        sender: undefined,
+        data
+      });
+    }
 
     return res.status(200).json({
       status: 'Message processed successfully'
