@@ -58,8 +58,10 @@ export const handleContactFlow = async (
 
     steps[nextStep] ?
       await sendTextMessage(senderId, steps[nextStep].message)
-      // TODO: Save here
-      : await sendTextMessage(senderId, sysMessages.thanksContact);
+      : (
+        await sendTextMessage(senderId, sysMessages.thanksContact),
+        senders.drop(senderId)
+      );
 
     return defaultReturn;
   }

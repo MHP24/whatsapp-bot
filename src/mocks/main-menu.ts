@@ -29,7 +29,7 @@ export const MAIN_MENU: Record<number, TMenu> = {
     options: [2, 3, 4, 5, 6],
   },
   2: {
-    title: '👤  Sobre mi',
+    title: '👤  Sobre mí',
     answer: [
       {
         type: 'text',

@@ -44,7 +44,8 @@ export const handleExitFlow = async (
     };
   }
 
-  //TODO: Remove user, bye msg and notify user interacted
+  await sendTextMessage(senderId, sysMessages.bye);
+  senders.drop(senderId);
 
   return defaultReturn;
 };
