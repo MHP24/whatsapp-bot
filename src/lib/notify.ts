@@ -1,5 +1,5 @@
-import { smtpConfig } from '../config';
-import { createTransport } from 'nodemailer';
+import { mailerConfig } from '../config';
+import emailjs from '@emailjs/nodejs';
 
 type TNotify = {
   senderId: string,
@@ -7,31 +7,19 @@ type TNotify = {
   subject?: string
 }
 
-const transport = createTransport({
-  host: smtpConfig.host,
-  port: Number(smtpConfig.port),
-  secure: false,
-  auth: {
-    user: smtpConfig.emailFrom,
-    pass: smtpConfig.password
-  }
-});
-
-
 export const notify = async (
   { senderId, email = 'no-email', subject = 'no-subject' }: TNotify
 ) => {
   try {
     console.log('[Contact]', { senderId, email, subject });
 
-    const mailOptions = {
-      from: smtpConfig.emailFrom,
-      to: smtpConfig.emailTo,
-      subject: `WhatsApp assistant - contact #${senderId}`,
-      text: `📲  ${senderId} 📲\n\nNew contact\n\nEmail: ${email}\nSubject: ${subject}`
-    };
-
-    await transport.sendMail(mailOptions);
+    await emailjs.send(mailerConfig.service!, mailerConfig.template!, {
+      phone: senderId,
+      message: `Email: ${email}\nSubject: ${subject}`
+    }, {
+      publicKey: mailerConfig.publicKey!,
+      privateKey: mailerConfig.privateKey,
+    });
 
   } catch (error) {
     console.error({ error });
