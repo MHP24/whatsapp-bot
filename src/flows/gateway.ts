@@ -22,7 +22,8 @@ export const handleGateway = async (req: Request, res: Response) => {
         error: 'Unsupported message type'
       });
     }
-    console.log('[Message]', { senderId, message: data });
+
+    console.log('[Message]', `${senderId} - ${data}`);
 
     const flows: Record<string, (data: TFlowInput) => Promise<TFlowResponse>> = {
       'info': handleInfoFlow,
@@ -31,6 +32,7 @@ export const handleGateway = async (req: Request, res: Response) => {
     };
 
     const sender = senders.get(senderId);
+    senders.refresh(senderId);
 
     const {
       hasToTransfer,
@@ -41,7 +43,7 @@ export const handleGateway = async (req: Request, res: Response) => {
     );
 
     if (hasToTransfer) {
-      console.log('[Transfer]', { senderId, destination, origin });
+      console.log('[Transfer]', `${senderId} - from: ${origin} to: ${destination}`);
 
       flows[destination!]({
         senderId,
