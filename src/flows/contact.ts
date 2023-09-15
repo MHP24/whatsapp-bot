@@ -1,4 +1,5 @@
 import { senders } from '../controllers';
+import { notify } from '../lib';
 import { sendTextMessage } from '../lib/messages';
 import { sysMessages } from '../mocks';
 import { TFlowInput, TFlowResponse } from '../types';
@@ -56,16 +57,24 @@ export const handleContactFlow = async (
       }
     });
 
-    steps[nextStep] ?
-      await sendTextMessage(senderId, steps[nextStep].message)
-      : (
-        await sendTextMessage(senderId, sysMessages.thanksContact),
-        senders.drop(senderId)
-      );
+
+    if (steps[nextStep]) {
+      await sendTextMessage(senderId, steps[nextStep].message);
+      return defaultReturn;
+    }
+
+    const { flowData } = senders.get(senderId)!;
+    const [email, subject] = flowData!.answers;
+
+    senders.drop(senderId);
+
+    await Promise.all([
+      sendTextMessage(senderId, sysMessages.thanksContact),
+      notify({ senderId, email, subject })
+    ]);
 
     return defaultReturn;
   }
-
 
   await sendTextMessage(
     senderId,

@@ -1,4 +1,5 @@
 import { senders } from '../controllers';
+import { notify } from '../lib';
 import { sendOptions, sendTextMessage } from '../lib/messages';
 import { sysMessages } from '../mocks';
 import { TFlowInput, TFlowResponse } from '../types';
@@ -12,8 +13,6 @@ const defaultReturn = {
 export const handleExitFlow = async (
   { senderId, sender, data }: TFlowInput
 ): Promise<TFlowResponse> => {
-
-  console.log({ senderId, sender, data });
 
   if (!sender) {
     senders.add(senderId, {
@@ -44,8 +43,12 @@ export const handleExitFlow = async (
     };
   }
 
-  await sendTextMessage(senderId, sysMessages.bye);
   senders.drop(senderId);
+  await Promise.all([
+    sendTextMessage(senderId, sysMessages.bye),
+    notify({ senderId, })
+  ]);
+
 
   return defaultReturn;
 };
