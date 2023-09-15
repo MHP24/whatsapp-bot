@@ -7,7 +7,7 @@ export type ImageAnswer = {
   type: 'image',
   content: {
     url: string,
-    text?: string
+    caption?: string
   }
 }
 

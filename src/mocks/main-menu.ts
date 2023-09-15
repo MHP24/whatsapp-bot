@@ -61,11 +61,39 @@ export const MAIN_MENU: Record<number, TMenu> = {
     options: [1, 2, 4, 5, 6],
   },
   4: {
-    title: 'Proyectos',
+    title: '📁  Proyectos',
     answer: [
       {
         type: 'text',
         content: 'Te invito a explorar algunos de mis proyectos'
+      },
+      {
+        type: 'image',
+        content: {
+          url: 'https://raw.githubusercontent.com/MHP24/whatsapp-bot/dev/public/img/abstract-mh.jpg',
+          caption: '*Abstract MH*\n'
+            + 'Experimenta una experiencia minimalista y abstracta con este increíble Tema de Visual Studio Code (Colores Pasteles).\n'
+            + '\n\n*Repositorio GitHub*\nhttps://github.com/MHP24/vsc-abstract-theme'
+            + '\n\n*Adquiérelo en*\nhttps://marketplace.visualstudio.com/items?itemName=MiguelHP.Abstract-MH'
+        }
+      },
+      {
+        type: 'image',
+        content: {
+          url: 'https://raw.githubusercontent.com/MHP24/whatsapp-bot/dev/public/img/fcode.jpg',
+          caption: 'Portal web interactivo para ejercitar lógica de programación (Soporte para JavaScript, TypeScript y Python)'
+            + '\n\n*Repositorio GitHub*\nhttps://github.com/MHP24/f-code'
+        }
+      },
+      {
+        type: 'image',
+        content: {
+          url: 'https://raw.githubusercontent.com/MHP24/whatsapp-bot/dev/public/img/dmiguelo.jpg',
+          caption: 'Lleva tu servidor de Discord al siguiente nivel con DMiguelo un bot de entretenimiento y música'
+            + '\n\n*Repositorio GitHub*\nhttps://github.com/MHP24/discord-bot'
+            + '\n\n*Adquiérelo en*'
+            + '\nhttps://discord.com/oauth2/authorize?client_id=1121947695930691674&permissions=0&scope=bot%20applications.commands'
+        }
       }
     ],
     options: [1, 2, 3, 5, 6]

@@ -16,6 +16,7 @@ export const validateEntry = (req: Request) => {
 };
 
 
+
 export const sendTextMessage = async (senderId: string, message: string) => {
   if (!message.trim().length) return;
 
@@ -34,14 +35,35 @@ export const sendTextMessage = async (senderId: string, message: string) => {
 };
 
 
+export const sendImage = async (senderId: string, url: string, caption: string = '') => {
+  try {
+    await http.post(BASE_URL, {
+      messaging_product: 'whatsapp',
+      recipient_type: 'individual',
+      to: senderId,
+      type: 'image',
+      image: {
+        link: url,
+        caption: caption
+      }
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
 export const sendMessages = async (
   senderId: string,
   messages: (TextAnswer | ImageAnswer)[]
 ) => {
+
+
   for (const message of messages) {
-    message.type === 'text' && (
+    message.type === 'text' ? (
       await sendTextMessage(senderId, message.content)
-    );
+    ) :
+      await sendImage(senderId, message.content.url, message.content.caption);
   }
 };
 
