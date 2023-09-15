@@ -72,7 +72,7 @@ export const MAIN_MENU: Record<number, TMenu> = {
         content: {
           url: 'https://raw.githubusercontent.com/MHP24/whatsapp-bot/dev/public/img/abstract-mh.jpg',
           caption: '*Abstract MH*\n'
-            + 'Experimenta una experiencia minimalista y abstracta con este increíble Tema de Visual Studio Code (Colores Pasteles).\n'
+            + 'Experimenta una experiencia minimalista y abstracta con este increíble tema para Visual Studio Code (colores pasteles).\n'
             + '\n\n*Repositorio GitHub*\nhttps://github.com/MHP24/vsc-abstract-theme'
             + '\n\n*Adquiérelo en*\nhttps://marketplace.visualstudio.com/items?itemName=MiguelHP.Abstract-MH'
         }
