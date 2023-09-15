@@ -23,7 +23,7 @@ export const handleExitFlow = async (
     await sendOptions(
       senderId,
       ['Si', 'No'],
-      '¿Te gustaría ponerte en contacto con Miguel?'
+      sysMessages.exitToContact
     );
     return defaultReturn;
   }
@@ -31,7 +31,11 @@ export const handleExitFlow = async (
   const isValidAnswer = data.toLowerCase().match(/^(si|no)$/g);
 
   if (!isValidAnswer) {
-    await sendTextMessage(senderId, sysMessages.invalidYesNo);
+    await sendOptions(
+      senderId,
+      ['Si', 'No'],
+      `${sysMessages.invalidYesNo}\n\n${sysMessages.exitToContact}`
+    );
     return defaultReturn;
   }
 
