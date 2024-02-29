@@ -1,0 +1,13 @@
+# Node
+node_modules/
+package-lock.json
+
+# Secrets
+.env
+.env.example
+
+# Build
+dist/
+
+# Msc
+etc/
